@@ -17,6 +17,7 @@ public class Empleado{
     private String apellido;
     private Integer documento;
     private List<RegistroAsistencia> asistenciasRegistradas;
+    private Usuario usuario;
 
     public Empleado(){}
     public Empleado(String cargo, String nombre, String apellido, Integer documento) {
@@ -60,5 +61,11 @@ public class Empleado{
     public void setAsistenciasRegistradas(List<RegistroAsistencia> asistenciasRegistradas) {
         this.asistenciasRegistradas = asistenciasRegistradas;
     }
-
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
 }
