@@ -2,7 +2,13 @@ package cdgym.clasesComplementarias;
 
 import java.util.Date;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+@Embeddable
 public class RegistroAsistencia {
+    @Temporal(TemporalType.DATE)
     private Date fechaAsistencia;
     private boolean asistencia;
     private String jornada;
@@ -37,6 +43,12 @@ public class RegistroAsistencia {
 
     public void setJornada(String jornada) {
         this.jornada = jornada;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistroAsistencia: \n    fechaAsistencia = " + fechaAsistencia + "\n    asistencia = " + asistencia 
+        + "\n    jornada = "+ jornada;
     }
     
     

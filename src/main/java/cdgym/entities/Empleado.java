@@ -1,8 +1,9 @@
 package cdgym.entities;
 
 import cdgym.clasesComplementarias.RegistroAsistencia;
-import java.util.ArrayList;
 import java.util.List;
+
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,7 +17,12 @@ public class Empleado{
     private String nombre;
     private String apellido;
     private Integer documento;
+
+    @ElementCollection
+    @CollectionTable(name = "asistencias", joinColumns = @JoinColumn(name = "empleado_id"))
     private List<RegistroAsistencia> asistenciasRegistradas;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "empleado", cascade = CascadeType.ALL)
     private Usuario usuario;
 
     public Empleado(){}
@@ -25,7 +31,7 @@ public class Empleado{
         this.nombre = nombre;
         this.apellido = apellido;
         this.documento = documento;
-        this.asistenciasRegistradas = new ArrayList<>();
+        
     }
     
     public Long getId() {
@@ -67,5 +73,14 @@ public class Empleado{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    @Override
+    public String toString() {
+        String asistenciaString = asistenciasRegistradas.stream().map(x -> x.toString()).reduce("", (a,b) -> a+b);
+    return "Empleado: \n  id=" + id + ", \n  cargo=" + cargo + ",\n  nombre=" + nombre + ",\n  apellido=" + apellido
+                + ",\n  documento=" + documento + ",\n  asistenciasRegistradas=" 
+                + asistenciaString;
+    }
+
+    
     
 }
