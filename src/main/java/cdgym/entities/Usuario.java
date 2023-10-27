@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="usuario")
@@ -14,7 +15,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotEmpty
     private String username;
     private String password;
     private String role;
@@ -65,5 +66,12 @@ public class Usuario {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario:{ \n  id=" + id + ",\n  username=" + username 
+        + ",\n  password=" + password + ",\n  role=" + role + "\n}";
+    }
+    
     
 }

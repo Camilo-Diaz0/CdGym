@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>CD Gym</title>
+</head>
+<body>
+    <nav th:replace="~{componentes/menu :: menu}"></nav>
+    <h1>Probandooooooooooooooooooo!</h1>
+    <section id="presentacion" class="container-fluid  pb-2 d-grid vh-100">
+        <div class="row d-flex align-items-center">
+            <h1 class="text-center p-3 fw-bold">CD GYM</h1>
+        </div>
+        <div class="row">
+            <div class="col-10 offset-1 text-center">
+                <h2>Tu destino para un estilo de vida saludable</h2>
+                <p class="lh-lg">En CD Gym, estamos comprometidos a ayudarte a alcanzar tus objetivos de fitness. Nuestra misión es brindarte las mejores instalaciones, entrenadores profesionales y un ambiente inspirador para tu bienestar.
+                </p>
+            </div>
+        </div>
+        <div class="row text-center bg-body-secondary py-4">
+            <div class="col border-start border-secondary d-flex flex-column justify-content-center">
+                <h5 class="mb-3">Dirección</h5>
+                <p>Nos ubicamos en la calle 42 #7b-34.</p>
+                <p>En guadalajara de Buga</p>
+            </div>
+            <div class="col border-start border-secondary d-flex flex-column justify-content-center">
+                <h5 class="mb-3">Horarios</h5>
+                <p>Tenemos servicio de lunes a viernes: de 7am hasta las 9pm</p>
+                <p>Sabados: de 7am a 1pm</p>
+
+            </div>
+            <div class="col border-start border-secondary d-flex flex-column justify-content-center">
+                <h5 class="mb-3">Contactanos</h5>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                    </svg>    
+                    33578899
+                </p>
+                 <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                    </svg>    
+                    33218899
+                </p>
+            </div>
+
+        </div>
+    </section>
+    
+    <section id="destacados" class="container-fluid py-4">
+        <div class="row">
+            <div class="col-7 d-flex flex-column justify-content-center gap-5">
+                <h2 class="text-center">¿Por qué elegir CD Gym?</h2>
+                <ul class="list-group">
+                    
+                    <li class="list-group-item ">Amplia gama de clases, desde yoga hasta entrenamiento de fuerza.</li>
+                    <li class="list-group-item">Equipo de última generación y áreas de entrenamiento especializadas.</li>
+                    <li class="list-group-item">Entrenadores personales altamente calificados.</li>
+                    <li class="list-group-item">Comunidad amigable y apoyo mutuo.</li>
+                </ul>
+            </div>
+            <div class="col-5 d-flex align-items-center">
+                <img class="img-fluid"src="https://www.hussle.com/blog/wp-content/uploads/2020/12/Gym-structure-1080x675.png"> 
+            </div>
+        </div>
+    </section>
+    
+    <section id="precios" class="container-fluid py-4 bg-body-secondary">
+        <div class="row"> 
+            <div class="col-5 d-flex align-items-center">
+                <img src="https://www.hussle.com/blog/wp-content/uploads/2020/12/Gym-structure-1080x675.png" class="img-fluid" >
+            </div>
+            <div class="col-7 d-flex flex-column justify-content-center">
+                <h2 class="text-center">Nuestros Precios</h2>
+            
+                <ul class="list-group text-center">
+
+                    <li class="list-group-item list-group-item-primary">Ofrecemos una variedad de opciones de membresía para adaptarse a tus necesidades:</li>
+                    <li class="list-group-item">Membresía quincenal: <span class="fw-bold">$45.000</span></li>
+                    <li class="list-group-item">Membresía mensual: <span class="fw-bold">$80.000</span></li>
+                    <li class="list-group-item">Membresía trimestral: <span class="fw-bold">$225.000</span></li>
+                    <li class="list-group-item">Membresía anual: <span class="fw-bold">$900.000</span></li>
+                </ul>
+            </div>
+        </div>
+        
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 CD Gym. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

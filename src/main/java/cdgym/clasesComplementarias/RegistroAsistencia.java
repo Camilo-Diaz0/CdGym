@@ -47,8 +47,8 @@ public class RegistroAsistencia {
 
     @Override
     public String toString() {
-        return "RegistroAsistencia: \n    fechaAsistencia = " + fechaAsistencia + "\n    asistencia = " + asistencia 
-        + "\n    jornada = "+ jornada;
+        return "{\n    fechaAsistencia = " + fechaAsistencia + "\n    asistencia = " + asistencia 
+        + "\n    jornada = "+ jornada + "\n  }";
     }
     
     
