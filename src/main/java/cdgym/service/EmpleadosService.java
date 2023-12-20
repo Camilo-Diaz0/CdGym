@@ -1,5 +1,6 @@
 package cdgym.service;
 
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cdgym.entities.Empleado;
@@ -25,8 +26,13 @@ public class EmpleadosService {
         return empleado;
     }
     public Empleado getEmpleadoByDocumento(Integer documento){
-        Empleado empleado = repository.findByDocumento(documento).orElseThrow();
-        return empleado;
+        try {
+            Empleado empleado = repository.findByDocumento(documento).orElseThrow();
+            return empleado;
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+        
     }
     public void eliminarEmpleado(Long id){
         repository.deleteById(id);

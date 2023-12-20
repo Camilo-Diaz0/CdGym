@@ -6,19 +6,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import cdgym.entities.Cliente;
 import cdgym.entities.Empleado;
 import cdgym.entities.Usuario;
+import cdgym.service.ClienteService;
 import cdgym.service.EmpleadosService;
 import jakarta.validation.Valid;
-
 
 @Controller
 public class IndexController {
     
     @Autowired
     EmpleadosService empleadosService;
+    
+    @Autowired
+    ClienteService clienteService;
 
     @GetMapping({"","/","/index"})
     public String index(){
@@ -29,30 +32,31 @@ public class IndexController {
         model.addAttribute("usuario", new Usuario());
         return "login";
     }
-    @PostMapping("/login")
+    @PostMapping("/iniciarsesion")
     public String login(@Valid Usuario usuario, BindingResult result){
+        System.out.println(usuario);
         if(result.hasErrors()){
+            System.out.println("tiwnw errores");
+            result.getAllErrors().forEach(System.out::println);
             return "login";
         }
         System.out.println(usuario);
-        return "index";
+        return "redirect:/";
     }
     @GetMapping("/registro")
     public String cargarRegistro(Model model) {
         model.addAttribute("usuario", null);
-        model.addAttribute("empleado", new Empleado());
         return "registro";
     }
     @PostMapping("/validarRegistro")
-    public String ValidarRegistro(Empleado empleado, Model model){
-        System.out.println(empleado.getDocumento());
-        empleado = empleadosService.getEmpleadoByDocumento(empleado.getDocumento());
-        System.out.println(empleado);
+    public String ValidarRegistro(@RequestParam Integer documento, Model model){
+        Empleado empleado = empleadosService.getEmpleadoByDocumento(documento);
         if(empleado != null) {
             model.addAttribute("mensaje", "Documento validado exitosamente," 
             +" realice su registro a continuacion");
-            model.addAttribute("usuario", new Usuario());
-            model.addAttribute("documeto", empleado.getDocumento());
+            Usuario usuario = new Usuario();
+            usuario.setEmpleado(empleado);
+            model.addAttribute("usuario", usuario);
         }
         else {
             model.addAttribute("error","El documento ingresado no se encuentra"
@@ -63,12 +67,24 @@ public class IndexController {
     @PostMapping("/registro")
     public String registro(@Valid Usuario usuario, BindingResult result){
         if(result.hasErrors()){
+            System.out.println("\n"+usuario);
+            result.getAllErrors().forEach(System.out::println);
             return "registro";
         }
         System.out.println(usuario);
-        return "index";
+        return "redirect:/";
     }
     
+    @GetMapping("/clientes")
+    public String consultarCliente(){
+        return "clientes";
+    }
 
-
+    @PostMapping("/clientes")
+    public String consultarCliente(@RequestParam Integer documento, Model model){
+        Cliente cliente= clienteService.getCliente(documento);
+        model.addAttribute("cliente", cliente);
+        return "clientes";
+    }
+    
 }

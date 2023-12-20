@@ -69,8 +69,10 @@ public class Usuario {
 
     @Override
     public String toString() {
+        String mensaje="";
+        if(empleado != null) mensaje = empleado.getNombre();
         return "Usuario:{ \n  id=" + id + ",\n  username=" + username 
-        + ",\n  password=" + password + ",\n  role=" + role + "\n}";
+        + ",\n  password=" + password + ",\n  role=" + role+ "\n  empleado asociado=" + mensaje  + "\n}";
     }
     
     

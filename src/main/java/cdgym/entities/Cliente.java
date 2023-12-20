@@ -2,12 +2,13 @@ package cdgym.entities;
 
 import java.time.Instant;
 import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "cliente")
@@ -20,15 +21,19 @@ public class Cliente {
     private String apellido;
     private Integer documento;
     private Integer telefono;
+    @Temporal(TemporalType.DATE)
     private Date expiracionMensualidad;
+    @Temporal(TemporalType.DATE)
+    private Date inicioMensualidad;
     
-    public Cliente() {}
-    public Cliente(String nombre, String apellido, Integer documento, Integer telefono, Date expiracionMensualidad) {
+    public Cliente(){}
+    public Cliente(String nombre, String apellido, Integer documento, Integer telefono, Date expiracionMensualidad, Date inicioMensualidad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.documento = documento;
         this.telefono = telefono;
         this.expiracionMensualidad = expiracionMensualidad;
+        this.inicioMensualidad = inicioMensualidad;
     }
 
     public boolean mensualidadExpirada(){
@@ -81,6 +86,12 @@ public class Cliente {
         this.expiracionMensualidad = expiracionMensualidad;
     }
 
+    public Date getInicioMensualidad() {
+        return inicioMensualidad;
+    }
+    public void setInicioMensualidad(Date inicioMensualidad) {
+        this.inicioMensualidad = inicioMensualidad;
+    }
     @Override
     public String toString() {
         return "Cliente => \n   id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", documento=" + documento

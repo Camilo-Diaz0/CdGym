@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Informacion de Cliente</title>
+</head>
+
+<body>
+    <nav th:replace="~{componentes/menu :: menu}"></nav>
+    <div class="container-fluid mt-5 pt-5">
+        <h2 class="text-center mt-3">registrar mensualidad</h2>
+        <p class="text-center">Aqui puede registrar el pago de la mensualidad de un cliente, o registrar un cliente
+            nuevo</p>
+        <div class="card col-md-8 offset-md-2">
+            <div class="card-header">Registro del pago de mensualidad de un cliente</div>
+            <div class="card-body p-3">
+                <form th:action="@{/empleado/registrarMensualidad/mensualidad}" method="post" class=""
+                    th:if="${cliente} ==null">
+                    <div class="form-group mb-3">
+                        <label for="formDocumento" class="form-label">Documento:</label>
+                        <input type="number" name="documento" id="formDocumento" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="formMensualidad" class="form-label">Elegir membresia:</label>
+                        <select class="form-select form-select-md" name="opcMensualidad" id="formMensualidad">
+                            <option value="1">Membresia quincenal</option>
+                            <option selected value="2">Membresia mensual</option>
+                            <option value="3">Membresia trimestral</option>
+                            <option value="4">Membresia anual</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3 d-sm-flex justify-content-around align-items-center">
+                        <button class="btn btn-primary">Enviar</button>
+                        <a class="btn btn-outline-success" th:href="@{/empleado/registrarMensualidad/cliente}">Nuevo
+                            cliente</a>
+                    </div>
+                </form>
+                <form th:action="@{/empleado/registrarMensualidad/cliente}" method="post" th:if="${cliente} != null" th:object="${cliente}">
+                    <h4 class="text-center">Crear nuevo cliente:</h4>
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">Documento:</label>
+                        <input type="number" name="" id="" class="form-control" th:field="*{documento}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">Nombre:</label>
+                        <input type="text" name="" id="" class="form-control" th:field="*{nombre}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">Apellido:</label>
+                        <input type="text" name="" id="" class="form-control" th:field="*{apellido}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" class="form-label">Telefono:</label>
+                        <input type="number" name="" id="" class="form-control" th:field="*{telefono}" required>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="" class="form-label">Elegir membresia:</label>
+                        <select class="form-select form-select-md" name="opcMensualidad" required>
+                            <option value="1">Membresia quincenal</option>
+                            <option selected value="2">Membresia mensual</option>
+                            <option value="3">Membresia trimestral</option>
+                            <option value="4">Membresia anual</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary form-control mb-3">Enviar</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -2,8 +2,6 @@ package cdgym.entities;
 
 import cdgym.clasesComplementarias.RegistroAsistencia;
 import java.util.List;
-
-
 import jakarta.persistence.*;
 
 @Entity
@@ -75,7 +73,10 @@ public class Empleado{
     }
     @Override
     public String toString() {
-        String asistenciaString = asistenciasRegistradas.stream().map(x -> x.toString()).reduce("", (a,b) -> a+b);
+        String asistenciaString="";
+        if(asistenciasRegistradas != null){
+            asistenciaString = asistenciasRegistradas.stream().map(x -> x.toString()).reduce("", (a,b) -> a+b);
+        }
     return "Empleado:{ \n  id=" + id + ", \n  cargo=" + cargo + ",\n  nombre=" + nombre + ",\n  apellido=" + apellido
                 + ",\n  documento=" + documento + ",\n  asistenciasRegistradas=" 
                 + asistenciaString + "\n}";
