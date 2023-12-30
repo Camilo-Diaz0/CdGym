@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Informacion de Cliente</title>
+</head>
+
+<body class="bg-body-secondary">
+    <nav th:replace="~{componentes/menu :: menu}"></nav>
+    <div class="container-fluid mt-5 vh-100">
+        <div class="text-center">
+            <h2 class="pt-3">Informacion de cliente</h2>
+            <p>Aca podra consultar toda la informacion acerca de el estado de su membresia</p>
+        </div>
+        <div class="card col-md-8 offset-md-2 mt-5 bg-body-tertiary">
+            <div class="card-header text-center">
+                <h4>Consulte su informacion</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item active">Nombre : <span th:text="${empleado.nombre}"></span></li>
+                    <li class="list-group-item">Apellido : <span th:text="${empleado.apellido}"></span></li>
+                    <li class="list-group-item">Id : <span th:text="${empleado.id}"></span></li>
+                    <li class="list-group-item">Documento : <span th:text="${empleado.documento}"></span></li>
+                    <li class="list-group-item">Cargo : <span th:text="${empleado.cargo}"></span></li>
+                    <div th:if="${empleado.usuario} != null">
+                        <li class="list-group-item active">Usuario asociado : </li>
+                        <li class="list-group-item">Id : <span th:text="${empleado.usuario.id}"></span></li>
+                        <li class="list-group-item">Username : <span th:text="${empleado.usuario.username}"></span></li>
+                        <li class="list-group-item">Role : <span th:text="${empleado.usuario.role}"></span></li>
+                    </div>
+                </ul>
+                <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" th:href="@{/}">
+                    Volver al inicio
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

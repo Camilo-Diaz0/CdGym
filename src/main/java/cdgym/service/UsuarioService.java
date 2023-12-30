@@ -14,7 +14,7 @@ public class UsuarioService {
 
     public UsuarioService(){}
 
-    public void guardarUsuario(Usuario usuario){
+    public void save(Usuario usuario){
         repository.save(usuario);
     }
     public Usuario getUsuario(Long id){
@@ -27,4 +27,11 @@ public class UsuarioService {
         repository.deleteById(id);
     }
 
+    public String gestionarRole(String cargo){
+        String role="";
+        if(cargo.equals("Instructor")) role = "ROLE_USER";
+        if(cargo.equals("Recepcionista")) role = "ROLE_GESTOR";
+        if(cargo.equals("Administrador")) role = "ROLE_ADMIN";
+        return role;
+    }
 }

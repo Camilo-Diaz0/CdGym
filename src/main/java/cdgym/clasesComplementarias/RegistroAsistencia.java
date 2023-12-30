@@ -13,7 +13,7 @@ public class RegistroAsistencia {
     private boolean asistencia;
     private String jornada;
 
-    RegistroAsistencia(){}
+    public RegistroAsistencia(){}
 
     public RegistroAsistencia(Date fechaAsistencia,boolean asistencia, String jornada) {
         this.fechaAsistencia = fechaAsistencia;

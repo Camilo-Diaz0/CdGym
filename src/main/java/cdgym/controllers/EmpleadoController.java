@@ -1,14 +1,24 @@
 package cdgym.controllers;
 
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import cdgym.clasesComplementarias.RegistroAsistencia;
 import cdgym.entities.Cliente;
+import cdgym.entities.Empleado;
 import cdgym.service.ClienteService;
 import cdgym.service.EmpleadosService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -21,10 +31,31 @@ public class EmpleadoController {
     @Autowired
     private ClienteService clienteService;
 
-    @GetMapping(value="/registrar")
-    public String crearEmpleado(){
-        service.getEmpleado(1l);
-        return "index";
+    @GetMapping(value="/crear")
+    public String crearEmpleado(Model model){
+        model.addAttribute("empleado", new Empleado());
+
+        return "crearEmpleado";
+    }
+
+    @PostMapping(value = "/crear")
+    public String crearEmpleado(@Valid Empleado empleado){
+        service.save(empleado);
+
+        return "redirect:/";
+    }
+
+    @GetMapping(value="/listar")
+    public String listarEmpleados(Model model){
+        List<Empleado> empleados = service.getEmpleados();
+        model.addAttribute("empleados", empleados);
+        return "listarEmpleados";
+    }
+    @GetMapping(value = "/{id}")
+    public String datos(@PathVariable Long id, Model model){
+        Empleado empleado = service.getEmpleado(id);
+        model.addAttribute("empleado", empleado);
+        return "informacionEmpleado";
     }
     @GetMapping(value = "/registrarMensualidad/")
     public String mensualidad(){
@@ -51,5 +82,36 @@ public class EmpleadoController {
         cliente = clienteService.procesarMensualidad(cliente, opcMensualidad);
         clienteService.saveCliente(cliente);
         return "redirect:/";
+    }
+    @GetMapping("/instructores")
+    public String listarInstructores(Model model){
+        model.addAttribute("empleados", service.getEmpleadosByCargo("Instructor"));
+        return "listaInstructores";
+    }
+    @GetMapping("/asistencia/{id}")
+    public String asistencia(@PathVariable Long id, Model model){
+        Empleado empleado = service.getEmpleado(id);
+        RegistroAsistencia asistencia = new RegistroAsistencia();
+        asistencia.setFechaAsistencia(Date.from(Instant.now()));
+        asistencia.setAsistencia(true);
+        model.addAttribute("asistencia", asistencia);
+        model.addAttribute("empleado", empleado);
+        return "asistencia";
+    }
+    
+    @PostMapping("/asistencia")
+    public String guardarAsistencia(@RequestParam Long idEmpleado, RegistroAsistencia asistencia){
+        Empleado empleado = service.getEmpleado(idEmpleado);
+        asistencia.setFechaAsistencia(Date.from(Instant.now()));
+        List<RegistroAsistencia> asistenciasRegistradas = empleado.getAsistenciasRegistradas();
+        asistenciasRegistradas.add(asistencia);
+        empleado.setAsistenciasRegistradas(asistenciasRegistradas);
+        service.save(empleado);
+        return "redirect:/empleado/instructores";
+    }
+    @GetMapping("/eliminar/{id}")
+    public String eliminarEmpleado(@PathVariable Long id){
+        service.eliminarEmpleado(id);
+        return "redirect:/empleado/listar";
     }
 }

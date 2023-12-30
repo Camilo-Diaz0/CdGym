@@ -19,8 +19,8 @@ public class CdgymApplication {
 		EmpleadosService service = run.getBean(EmpleadosService.class);
 		UsuarioService usuarioService = run.getBean(UsuarioService.class);
 		ClienteService clienteService = run.getBean(ClienteService.class);
-		Empleado empleado = new Empleado("instructor", "Ramiro", "Quevedo", 1123578920);
-		Usuario usuario = new Usuario("ramiro", "password", null);
+		Empleado empleado = new Empleado("Instructor", "Ramiro", "Quevedo", 1123578920);
+		Usuario usuario = new Usuario("ramiro", "password", empleado);
 		empleado.setUsuario(usuario);
 		service.save(empleado);
 		System.out.println(empleado);

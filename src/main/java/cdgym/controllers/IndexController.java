@@ -12,6 +12,7 @@ import cdgym.entities.Empleado;
 import cdgym.entities.Usuario;
 import cdgym.service.ClienteService;
 import cdgym.service.EmpleadosService;
+import cdgym.service.UsuarioService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -22,6 +23,9 @@ public class IndexController {
     
     @Autowired
     ClienteService clienteService;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     @GetMapping({"","/","/index"})
     public String index(){
@@ -71,7 +75,10 @@ public class IndexController {
             result.getAllErrors().forEach(System.out::println);
             return "registro";
         }
-        System.out.println(usuario);
+        String role;
+        role = usuarioService.gestionarRole(usuario.getEmpleado().getCargo());
+        usuario.setRole(role);
+        usuarioService.save(usuario);
         return "redirect:/";
     }
     

@@ -1,5 +1,6 @@
 package cdgym.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class EmpleadosService {
     }
     public void eliminarEmpleado(Long id){
         repository.deleteById(id);
+    }
+    public List<Empleado> getEmpleados(){
+        return repository.findAll();
+    }
+    public List<Empleado> getEmpleadosByCargo(String cargo){
+        return repository.findAllByCargo(cargo);
     }
 
 }
