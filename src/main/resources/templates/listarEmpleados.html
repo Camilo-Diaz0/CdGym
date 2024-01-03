@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <title>Listado de Empleados</title>
-</head>
+<head th:replace="~{componentes/menu :: header}"></head>
 
 <body class="bg-body-secondary">
     <nav th:replace="~{componentes/menu :: menu}"></nav>
     <div class="container-fluid mt-5 vh-100">
         <div class="text-center">
-            <h2 class="pt-3">Listado de Empleados</h2>
+            <h2 class="pt-3" th:text="${titulo}"></h2>
             <p>Aca podra consultar la informacion de las personas que forman parte del equipo de cd Gym</p>
         </div>
         <div class="card col-md-8 offset-md-2 mt-5 bg-body-tertiary">
@@ -29,8 +24,8 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Cargo</th>
-                            <th>Mas Informacion</th>
-                            <th>Eliminar Empleado</th>
+                            <th sec:authorize="hasRole('ROLE_GESTOR')">Mas Informacion</th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar Empleado</th>
 
                         </tr>
                     </thead>
@@ -40,9 +35,9 @@
                             <th th:text="${empleado.nombre}"></th>
                             <th th:text="${empleado.apellido}"></th>
                             <th th:text="${empleado.cargo}"></th>
-                            <th><a th:href="@{/empleado/{id}(id=${empleado.id})}" class="link-offset-1">Ver mas...</a>
+                            <th sec:authorize="hasRole('ROLE_GESTOR')"><a th:href="@{/empleado/informacion/{id}(id=${empleado.id})}" class="link-offset-1">Ver mas...</a>
                             </th>
-                            <th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')">
                                 <div class="btn-group dropend" th:if="${empleado.cargo} != 'Administrador'">
                                     <a  class="link-danger link-offset-1 dropdown-toggle" href="#dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                       Eliminar
@@ -72,10 +67,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous">
-	</script>
+    <footer th:replace="~{componentes/menu :: footer}"></footer>
 </body>
 
 </html>

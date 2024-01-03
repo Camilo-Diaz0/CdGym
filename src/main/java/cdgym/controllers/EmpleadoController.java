@@ -34,7 +34,7 @@ public class EmpleadoController {
     @GetMapping(value="/crear")
     public String crearEmpleado(Model model){
         model.addAttribute("empleado", new Empleado());
-
+        model.addAttribute("titulo", "Registrar empleado");
         return "crearEmpleado";
     }
 
@@ -49,16 +49,19 @@ public class EmpleadoController {
     public String listarEmpleados(Model model){
         List<Empleado> empleados = service.getEmpleados();
         model.addAttribute("empleados", empleados);
+        model.addAttribute("titulo", "Listado de empleados");
         return "listarEmpleados";
     }
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/informacion/{id}")
     public String datos(@PathVariable Long id, Model model){
         Empleado empleado = service.getEmpleado(id);
         model.addAttribute("empleado", empleado);
+        model.addAttribute("titulo", "Informacion de empleado");
         return "informacionEmpleado";
     }
     @GetMapping(value = "/registrarMensualidad/")
-    public String mensualidad(){
+    public String mensualidad(Model model){
+        model.addAttribute("titulo", "Registro de mensualidad");
         return "mensualidad";
     }
     @PostMapping(value="/registrarMensualidad/mensualidad")
@@ -74,6 +77,8 @@ public class EmpleadoController {
     @GetMapping(value = "/registrarMensualidad/cliente")
     public String registrarCliente(Model model){
         model.addAttribute("cliente", new Cliente());
+        model.addAttribute("titulo", "Registro de mensualidad");
+
         return "mensualidad";
     }
     @PostMapping(value = "/registrarMensualidad/cliente")
@@ -86,6 +91,8 @@ public class EmpleadoController {
     @GetMapping("/instructores")
     public String listarInstructores(Model model){
         model.addAttribute("empleados", service.getEmpleadosByCargo("Instructor"));
+        model.addAttribute("titulo", "Lista de Instructores");
+
         return "listaInstructores";
     }
     @GetMapping("/asistencia/{id}")
@@ -96,6 +103,7 @@ public class EmpleadoController {
         asistencia.setAsistencia(true);
         model.addAttribute("asistencia", asistencia);
         model.addAttribute("empleado", empleado);
+        model.addAttribute("titulo", "Registro de asistencia del instructor");
         return "asistencia";
     }
     

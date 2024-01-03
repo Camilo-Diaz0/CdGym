@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <title>CD Gym</title>
-</head>
+<head th:replace="~{componentes/menu :: header}"></head>
 <body>
     <nav th:replace="~{componentes/menu :: menu}"></nav>
     <h1>Probandooooooooooooooooooo!</h1>
     <section id="presentacion" class="container-fluid  pb-2 d-grid vh-100">
         <div class="row d-flex align-items-center">
-            <h1 class="text-center p-3 fw-bold">CD GYM</h1>
+            <h1 class="text-center p-3 fw-bold" th:text="${titulo}"></h1>
         </div>
         <div class="row">
             <div class="col-10 offset-1 text-center">
@@ -90,8 +85,6 @@
         
     </section>
     
-    <footer>
-        <p>&copy; 2023 CD Gym. Todos los derechos reservados.</p>
-    </footer>
+    <footer th:replace="~{componentes/menu :: footer}"></footer>
 </body>
 </html>

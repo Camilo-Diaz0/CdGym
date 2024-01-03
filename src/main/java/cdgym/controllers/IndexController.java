@@ -1,5 +1,7 @@
 package cdgym.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,61 +19,74 @@ import jakarta.validation.Valid;
 
 @Controller
 public class IndexController {
-    
+
     @Autowired
     EmpleadosService empleadosService;
-    
+
     @Autowired
     ClienteService clienteService;
 
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping({"","/","/index"})
-    public String index(){
+    @GetMapping({ "", "/", "/index" })
+    public String index(Model model) {
+        model.addAttribute("titulo", "CD GYM");
         return "index";
     }
+
     @GetMapping("/login")
-    public String cargarLogin(Model model) {
+    public String cargarLogin(Model model, Principal principal) {
+        model.addAttribute("titulo", "Inicio de sesion");
+        if (principal != null)
+            return "redirect:/";
         model.addAttribute("usuario", new Usuario());
         return "login";
     }
-    @PostMapping("/iniciarsesion")
-    public String login(@Valid Usuario usuario, BindingResult result){
+
+    @PostMapping("/login")
+    public String login(@Valid Usuario usuario, BindingResult result) {
         System.out.println(usuario);
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             System.out.println("tiwnw errores");
             result.getAllErrors().forEach(System.out::println);
             return "login";
         }
-        System.out.println(usuario);
+
         return "redirect:/";
     }
+
     @GetMapping("/registro")
     public String cargarRegistro(Model model) {
+        model.addAttribute("titulo", "Registro de Usuario");
         model.addAttribute("usuario", null);
         return "registro";
     }
+
     @PostMapping("/validarRegistro")
-    public String ValidarRegistro(@RequestParam Integer documento, Model model){
+    public String ValidarRegistro(@RequestParam Integer documento, Model model) {
         Empleado empleado = empleadosService.getEmpleadoByDocumento(documento);
-        if(empleado != null) {
-            model.addAttribute("mensaje", "Documento validado exitosamente," 
-            +" realice su registro a continuacion");
-            Usuario usuario = new Usuario();
-            usuario.setEmpleado(empleado);
-            model.addAttribute("usuario", usuario);
-        }
-        else {
-            model.addAttribute("error","El documento ingresado no se encuentra"
-            +" en la lista de empleados");
+        if (empleado != null) {
+            if (empleado.getUsuario() != null) {
+                model.addAttribute("error", "El empleado ya tiene un usuario asociado");
+            } else {
+                model.addAttribute("mensaje", "Documento validado exitosamente,"
+                        + " realice su registro a continuacion");
+                Usuario usuario = new Usuario();
+                usuario.setEmpleado(empleado);
+                model.addAttribute("usuario", usuario);
+            }
+        } else {
+            model.addAttribute("error", "El documento ingresado no se encuentra"
+                    + " en la lista de empleados");
         }
         return "registro";
     }
+
     @PostMapping("/registro")
-    public String registro(@Valid Usuario usuario, BindingResult result){
-        if(result.hasErrors()){
-            System.out.println("\n"+usuario);
+    public String registro(@Valid Usuario usuario, BindingResult result) {
+        if (result.hasErrors()) {
+            System.out.println("\n" + usuario);
             result.getAllErrors().forEach(System.out::println);
             return "registro";
         }
@@ -81,17 +96,22 @@ public class IndexController {
         usuarioService.save(usuario);
         return "redirect:/";
     }
-    
+
     @GetMapping("/clientes")
-    public String consultarCliente(){
+    public String consultarCliente(Model model) {
+        model.addAttribute("titulo", "Informacion del cliente");
         return "clientes";
     }
 
     @PostMapping("/clientes")
-    public String consultarCliente(@RequestParam Integer documento, Model model){
-        Cliente cliente= clienteService.getCliente(documento);
+    public String consultarCliente(@RequestParam Integer documento, Model model) {
+        Cliente cliente = clienteService.getCliente(documento);
         model.addAttribute("cliente", cliente);
         return "clientes";
     }
-    
+
+    @GetMapping("/error403")
+    public String denegado(){
+        return "403";
+    }
 }
