@@ -3,12 +3,12 @@
 
 <head th:replace="~{componentes/menu :: header}"></head>
 
-<body class="bg-black bg-gradient">
-	<nav th:replace="~{componentes/menu :: menu}"></nav>
-	<h1>Probandooooooooooooooooooo!</h1>
+<body class="bg-body-secondary">
+	<div th:replace="~{componentes/menu :: menu}"></div>
 	<div class="container-fluid vh-100">
 		<form th:if="${usuario} == null" th:action="@{/validarRegistro}" method="post"
-			class="col-md-6 offset-md-3 bg-body-tertiary p-4 my-5 min-h-50 d-flex flex-column justify-content-center gap-3 border rounded">
+			class="col-md-6 offset-md-3 bg-body-tertiary p-4 my-5 min-h-50 d-flex flex-column justify-content-center 
+			gap-3 border border-info rounded">
 			<h3 class="text-center" th:text="${titulo}"></h3>
 			<p>Para registrarse debe pertecer a la lista de empleados del gimnasio. por favor digite su número de
 				identificación para comprobar que es parte del equipo de CD Gym.</p>

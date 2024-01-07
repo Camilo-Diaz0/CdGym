@@ -3,15 +3,15 @@
 
 <head th:replace="~{componentes/menu :: header}"></head>
 
-<body>
-    <nav th:replace="~{componentes/menu :: menu}"></nav>
+<body class="bg-body-secondary">
+    <div th:replace="~{componentes/menu :: menu}"></div>
     <div class="container-fluid mt-5 vh-100">
         <div class="text-center">
             <h2 class="pt-3" th:text="${titulo}"></h2>
             <p>Aca podra consultar la informacion de los instructores del Gym y registrar la asistencia diara laboral
                 del instructor</p>
         </div>
-        <div class="card col-md-8 offset-md-2 mt-5 bg-body-tertiary">
+        <div class="card col-md-8 offset-md-2 mt-5 border-info p-2">
             <div class="card-header text-center">
                 <h4>Consulte su informacion</h4>
             </div>

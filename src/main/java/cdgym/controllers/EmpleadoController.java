@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,9 +40,9 @@ public class EmpleadoController {
     }
 
     @PostMapping(value = "/crear")
-    public String crearEmpleado(@Valid Empleado empleado){
+    public String crearEmpleado(@Valid Empleado empleado, RedirectAttributes flash){
         service.save(empleado);
-
+        flash.addFlashAttribute("success", "Empleado creado exitosamente");
         return "redirect:/";
     }
 
@@ -65,13 +66,16 @@ public class EmpleadoController {
         return "mensualidad";
     }
     @PostMapping(value="/registrarMensualidad/mensualidad")
-    public String mensualidad(@RequestParam Integer documento, @RequestParam Integer opcMensualidad ,Model model){
+    public String mensualidad(@RequestParam Integer documento, @RequestParam Integer opcMensualidad,Model model, RedirectAttributes flash){
         Cliente cliente = clienteService.getCliente(documento);
         if(cliente == null){
-            return "mensualidad";
+            flash.addFlashAttribute("error", "El documento ingresado no pertenece a ningun cliente de CDGYM."+
+            " Intente de nuevo o registre un nuevo cliente");
+            return "redirect:/empleado/registrarMensualidad/";
         }
         cliente = clienteService.procesarMensualidad(cliente, opcMensualidad);
         clienteService.saveCliente(cliente);
+        flash.addFlashAttribute("success", "Mensualidad del cliente registrada exitosamente");
         return "redirect:/";
     }
     @GetMapping(value = "/registrarMensualidad/cliente")
@@ -82,10 +86,10 @@ public class EmpleadoController {
         return "mensualidad";
     }
     @PostMapping(value = "/registrarMensualidad/cliente")
-    public String registrarCliente(Cliente cliente, @RequestParam Integer opcMensualidad){
-        System.out.println(cliente + " : "+opcMensualidad);
+    public String registrarCliente(Cliente cliente, @RequestParam Integer opcMensualidad, RedirectAttributes flash){
         cliente = clienteService.procesarMensualidad(cliente, opcMensualidad);
         clienteService.saveCliente(cliente);
+        flash.addFlashAttribute("success", "Cliente y mensualidad registrados exitosamente");
         return "redirect:/";
     }
     @GetMapping("/instructores")
@@ -108,18 +112,20 @@ public class EmpleadoController {
     }
     
     @PostMapping("/asistencia")
-    public String guardarAsistencia(@RequestParam Long idEmpleado, RegistroAsistencia asistencia){
+    public String guardarAsistencia(@RequestParam Long idEmpleado, RegistroAsistencia asistencia, RedirectAttributes flash){
         Empleado empleado = service.getEmpleado(idEmpleado);
         asistencia.setFechaAsistencia(Date.from(Instant.now()));
         List<RegistroAsistencia> asistenciasRegistradas = empleado.getAsistenciasRegistradas();
         asistenciasRegistradas.add(asistencia);
         empleado.setAsistenciasRegistradas(asistenciasRegistradas);
         service.save(empleado);
+        flash.addFlashAttribute("success", "Asistencia registrada exitosamente");
         return "redirect:/empleado/instructores";
     }
     @GetMapping("/eliminar/{id}")
-    public String eliminarEmpleado(@PathVariable Long id){
+    public String eliminarEmpleado(@PathVariable Long id, RedirectAttributes flash){
         service.eliminarEmpleado(id);
+        flash.addFlashAttribute("success", "Empleado eliminado exitosamente");
         return "redirect:/empleado/listar";
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import cdgym.entities.Cliente;
 import cdgym.entities.Empleado;
 import cdgym.entities.Usuario;
@@ -36,24 +38,19 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String cargarLogin(Model model, Principal principal) {
+    public String cargarLogin(Model model, Principal principal, RedirectAttributes flash,
+        @RequestParam(value = "error", required = false) String error) {
         model.addAttribute("titulo", "Inicio de sesion");
-        if (principal != null)
+        if (principal != null){
+            flash.addFlashAttribute("info", "No es posible ir al login debido a que ya ha iniciado sesion");
             return "redirect:/";
+        }
+        if(error != null){
+            flash.addFlashAttribute("error", "Username o contraseña incorrecto, por favor vuelva a intentarlo");
+            return "redirect:/login";
+        }
         model.addAttribute("usuario", new Usuario());
         return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(@Valid Usuario usuario, BindingResult result) {
-        System.out.println(usuario);
-        if (result.hasErrors()) {
-            System.out.println("tiwnw errores");
-            result.getAllErrors().forEach(System.out::println);
-            return "login";
-        }
-
-        return "redirect:/";
     }
 
     @GetMapping("/registro")
@@ -68,9 +65,9 @@ public class IndexController {
         Empleado empleado = empleadosService.getEmpleadoByDocumento(documento);
         if (empleado != null) {
             if (empleado.getUsuario() != null) {
-                model.addAttribute("error", "El empleado ya tiene un usuario asociado");
+                model.addAttribute("error", "El documento ingresado ya tiene un usuario asociado");
             } else {
-                model.addAttribute("mensaje", "Documento validado exitosamente,"
+                model.addAttribute("info", "Documento validado exitosamente,"
                         + " realice su registro a continuacion");
                 Usuario usuario = new Usuario();
                 usuario.setEmpleado(empleado);
@@ -84,7 +81,7 @@ public class IndexController {
     }
 
     @PostMapping("/registro")
-    public String registro(@Valid Usuario usuario, BindingResult result) {
+    public String registro(@Valid Usuario usuario, BindingResult result, RedirectAttributes flash) {
         if (result.hasErrors()) {
             System.out.println("\n" + usuario);
             result.getAllErrors().forEach(System.out::println);
@@ -94,6 +91,7 @@ public class IndexController {
         role = usuarioService.gestionarRole(usuario.getEmpleado().getCargo());
         usuario.setRole(role);
         usuarioService.save(usuario);
+        flash.addFlashAttribute("success", "Usuario registrado exitosamente");
         return "redirect:/";
     }
 
@@ -104,8 +102,12 @@ public class IndexController {
     }
 
     @PostMapping("/clientes")
-    public String consultarCliente(@RequestParam Integer documento, Model model) {
+    public String consultarCliente(@RequestParam Integer documento, Model model, RedirectAttributes flash) {
         Cliente cliente = clienteService.getCliente(documento);
+        if(cliente == null){
+            flash.addFlashAttribute("error", "El documento ingresado no se encuentra en la lista de clientes");
+            return "redirect:/clientes";
+        }
         model.addAttribute("cliente", cliente);
         return "clientes";
     }

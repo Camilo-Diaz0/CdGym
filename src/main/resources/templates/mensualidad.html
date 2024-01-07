@@ -3,13 +3,13 @@
 
 <head th:replace="~{componentes/menu :: header}"></head>
 
-<body>
-    <nav th:replace="~{componentes/menu :: menu}"></nav>
-    <div class="container-fluid mt-5 pt-5">
+<body class="bg-body-secondary">
+    <div th:replace="~{componentes/menu :: menu}"></div>
+    <div class="container-fluid mt-1 pt-3">
         <h2 class="text-center mt-3" th:text="${titulo}"></h2>
         <p class="text-center">Aqui puede registrar el pago de la mensualidad de un cliente, o registrar un cliente
             nuevo</p>
-        <div class="card col-md-8 offset-md-2">
+        <div class="card col-md-8 offset-md-2 border-info p-2">
             <div class="card-header">Registro del pago de mensualidad de un cliente</div>
             <div class="card-body p-3">
                 <form th:action="@{/empleado/registrarMensualidad/mensualidad}" method="post" class=""

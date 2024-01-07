@@ -3,9 +3,9 @@
 
 <head th:replace="~{componentes/menu :: header}"></head>
 
-<body class="bg-black bg-gradient">
-    <nav th:replace="~{componentes/menu :: menu}"></nav>
-    <h1>Probandooooooooooooooooooo!</h1>
+<body class="bg-body-secondary bg-gradient">
+    <div th:replace="~{componentes/menu :: menu}"></div>
+    
     <div class="container-fluid vh-100">
 
         <form th:action="@{/empleado/asistencia}" th:object="${asistencia}" method="post"

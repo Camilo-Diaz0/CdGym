@@ -3,18 +3,12 @@
 
 <head th:replace="~{componentes/menu :: header}"></head>
 
-<body class="bg-black bg-gradient">
-	<nav th:replace="~{componentes/menu :: menu}"></nav>
-	<h1>Probandooooooooooooooooooo!</h1>
+<body class="bg-body-secondary">
+	<div th:replace="~{componentes/menu :: menu}"></div>
 	<div class="container-fluid vh-100">
-		<div th:object="${usuario}" th:remove="tag">
-			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-				<li th:each=" err : ${#fields.errors('*')}" th:text="${err}"></li>
-			</ul>
-		</div>
 		<form th:if="${usuario} != null" th:action="@{/login}" th:object="${usuario}" method="post" 
 			class="col-md-6 offset-md-3 bg-body-tertiary px-4 my-5 h-50 d-flex flex-column 
-			justify-content-center gap-3 border rounded">
+			justify-content-center gap-3 border border-info rounded">
 			<h3 class="text-center " th:text="${titulo}"></h3>
 			<div class="mb-3">
 				<label for="username" class="form-label">Username:</label>

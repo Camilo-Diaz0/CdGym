@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{componentes/menu :: header}"></head>
-<body>
-    <nav th:replace="~{componentes/menu :: menu}"></nav>
-    <h1>Probandooooooooooooooooooo!</h1>
+<body >
+    <div th:replace="~{componentes/menu :: menu}"></div>
+
     <section id="presentacion" class="container-fluid  pb-2 d-grid vh-100">
         <div class="row d-flex align-items-center">
             <h1 class="text-center p-3 fw-bold" th:text="${titulo}"></h1>
