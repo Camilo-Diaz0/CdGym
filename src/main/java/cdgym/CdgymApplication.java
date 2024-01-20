@@ -30,7 +30,7 @@ public class CdgymApplication {
 		usuario = usuarioService.getUsuario(1l);
 		if(usuario != null) System.out.println(usuario);
 		else System.out.println("usuario no");
-		clienteService.saveCliente(new Cliente("camilo","diaz",11,318,null,null));
+		clienteService.saveCliente(new Cliente("camilo","diaz",1111111111,3183183183l,null,null));
 		
 	}
 }

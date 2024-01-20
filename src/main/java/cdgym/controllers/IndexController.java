@@ -1,7 +1,6 @@
 package cdgym.controllers;
 
 import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import cdgym.entities.Cliente;
 import cdgym.entities.Empleado;
 import cdgym.entities.Usuario;
@@ -81,10 +79,10 @@ public class IndexController {
     }
 
     @PostMapping("/registro")
-    public String registro(@Valid Usuario usuario, BindingResult result, RedirectAttributes flash) {
-        if (result.hasErrors()) {
-            System.out.println("\n" + usuario);
-            result.getAllErrors().forEach(System.out::println);
+    public String registro(@Valid Usuario usuario, BindingResult result, RedirectAttributes flash, Model model) {
+        boolean repetido = usuarioService.usernameRepetido(usuario.getUsername());
+        if (result.hasErrors() || repetido) {
+            if(repetido) model.addAttribute("error","El username ya exite, intente con uno diferente");
             return "registro";
         }
         String role;

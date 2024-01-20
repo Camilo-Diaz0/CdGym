@@ -3,6 +3,9 @@ package cdgym.entities;
 import cdgym.clasesComplementarias.RegistroAsistencia;
 import java.util.List;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "empleado")
@@ -11,9 +14,18 @@ public class Empleado{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String cargo;
+
+    @NotBlank
     private String nombre;
+
+    @NotBlank
     private String apellido;
+
+    @Column(unique = true)
+    @Digits(integer = 10, fraction = 0)
+    @Min(1000000000)
     private Integer documento;
 
     @ElementCollection

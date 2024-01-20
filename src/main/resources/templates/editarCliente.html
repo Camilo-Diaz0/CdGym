@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{componentes/menu :: header}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-body-secondary">
+	<div th:replace="~{componentes/menu :: menu}"></div>
+	<div class="container-fluid">
+		<form th:if="${cliente} != null" th:action="@{/empleado/clientes/editar}" th:object="${cliente}" method="post"
+			class="col-md-6 offset-md-3 bg-body-tertiary p-4 my-5 d-flex flex-column 
+			justify-content-center gap-3 border border-info rounded">
+			<h3 class="text-center " th:text="${titulo}"></h3>
+			<div hidden>
+				<input type="number" th:field="*{id}" hidden>
+				<input type="number" th:field="*{documento}" hidden>
+				<input th:field="*{inicioMensualidad}" hidden>
+			</div>
+			<div class="mb-3">
+				<label for="nombre" class="form-label">Nombre:</label>
+				<input type="text" class="form-control" id="nombre" th:field="*{nombre}" required
+					th:errorclass="border-danger">
+				<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-form text-danger"></div>
+
+			</div>
+			<div class="mb-3">
+				<label for="apellido" class="form-label">Apellido:</label>
+				<input type="text" class="form-control" id="apellido" th:field="*{apellido}" required
+					th:errorclass="border-danger">
+				<div th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-form text-danger"></div>
+			</div>
+			<div class="mb-3">
+				<label for="telefono" class="form-label">Telefono:</label>
+				<input type="number" class="form-control" id="telefono" th:field="*{telefono}" required
+					th:errorclass="border-danger" max="4000000000">
+				<div th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="text-form text-danger">
+				</div>
+			</div>
+			<div class="mb-3">
+				<label for="expiracionMensualidad" class="form-label">Fin mensualidad:</label>
+				<input type="date" class="form-control" id="expiracionMensualidad" th:field="*{expiracionMensualidad}"
+					th:errorclass="border-danger" required>
+				<div th:if="${#fields.hasErrors('expiracionMensualidad')}" th:errors="*{expiracionMensualidad}" 
+					class="text-form text-danger"></div>
+			</div>
+			<div>
+				<button class="btn btn-primary form-control">Enviar</button>
+			</div>
+		</form>
+	</div>
+	<footer th:replace="~{componentes/menu :: footer}"></footer>
+</body>
+
+</html>

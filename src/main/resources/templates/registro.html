@@ -40,11 +40,13 @@
 			</div>
 			<div>
 				<label for="inputName" class="form-label">Username:</label>
-				<input type="text" class="form-control" id="inputName" th:field="*{username}">
+				<input type="text" class="form-control" id="inputName" th:field="*{username}" th:errorclass="border-danger">
+				<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-form text-danger"></div>
 			</div>
 			<div>
 				<label for="inputPassword" class="form-label">Contraseña:</label>
-				<input type="text" class="form-control" id="inputPassword" th:field="*{password}">
+				<input type="password" class="form-control" id="inputPassword" th:field="*{password}" th:errorclass="border-danger">
+				<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-form text-danger"></div>
 			</div>
 
 			<div class="d-flex justify-content-around  align-items-center">

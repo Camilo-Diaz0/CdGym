@@ -1,9 +1,14 @@
 package cdgym.service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import cdgym.clasesComplementarias.RegistroAsistencia;
 import cdgym.entities.Empleado;
 import cdgym.repository.EmpleadosRepository;
 
@@ -45,4 +50,15 @@ public class EmpleadosService {
         return repository.findAllByCargo(cargo);
     }
 
+    public boolean documentoRepetido(Integer documento){
+         Empleado empleado = getEmpleadoByDocumento(documento);
+        if(empleado !=  null) return true;
+        return false;
+    }
+    public boolean asistenciaRepetida(List<RegistroAsistencia> asistencias){
+        String ahora = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault()).toString();
+        return asistencias.stream().map(as -> as.getFechaAsistencia())
+                .filter(Objects::nonNull).map(fecha -> fecha.toString())
+                .anyMatch(text -> text.equals(ahora));
+    }
 }

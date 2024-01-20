@@ -27,6 +27,15 @@
                         <li class="list-group-item">Username : <span th:text="${empleado.usuario.username}"></span></li>
                         <li class="list-group-item">Role : <span th:text="${empleado.usuario.role}"></span></li>
                     </div>
+                    <div th:if="!${empleado.asistenciasRegistradas.isEmpty}">
+                        <li class="list-group-item active">Registro de asistencia : </li>
+                        <div th:each="asistencia : ${empleado.asistenciasRegistradas}">
+                            <li class="list-group-item" > 
+                                <span th:text="'Fecha: '+${asistencia.fechaAsistencia}"></span>
+                                <span th:text="'Jornada: '+${asistencia.jornada}" class="mx-1"></span>
+                            </li>
+                        </div>
+                    </div>
                 </ul>
                 <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" th:href="@{/}">
                     Volver al inicio

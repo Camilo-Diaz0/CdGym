@@ -28,6 +28,12 @@ public class UsuarioService {
         return null;
 
     }
+    public Usuario getUsuario(String username){
+        Optional<Usuario> usuOptional = repository.findByUsername(username);
+        if(usuOptional.isPresent()) return usuOptional.get();
+        return null;
+
+    }
     public void eliminarUsuario(Long id){
         repository.deleteById(id);
     }
@@ -38,5 +44,10 @@ public class UsuarioService {
         if(cargo.equals("Recepcionista")) role = "ROLE_USER, ROLE_GESTOR";
         if(cargo.equals("Administrador")) role = "ROLE_USER, ROLE_GESTOR, ROLE_ADMIN";
         return role;
+    }
+    public boolean usernameRepetido(String username){
+        Usuario usuario = getUsuario(username);
+        if(usuario != null) return true;
+        return false;
     }
 }
