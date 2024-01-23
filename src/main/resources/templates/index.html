@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{componentes/menu :: header}"></head>
-<body >
+<body>
     <div th:replace="~{componentes/menu :: menu}"></div>
-
     <section id="presentacion" class="container-fluid  pb-2 d-grid vh-100">
-        <div class="row d-flex align-items-center">
+        <div class="row text-center my-auto">
             <h1 class="text-center p-3 fw-bold" th:text="${titulo}"></h1>
         </div>
         <div class="row">
@@ -48,7 +47,7 @@
     
     <section id="destacados" class="container-fluid py-4">
         <div class="row">
-            <div class="col-7 d-flex flex-column justify-content-center gap-5">
+            <div class="offset-sm-1 offset-md-0 col-sm-10 col-md-7 d-flex flex-column justify-content-center gap-5">
                 <h2 class="text-center">¿Por qué elegir CD Gym?</h2>
                 <ul class="list-group">
                     
@@ -58,18 +57,18 @@
                     <li class="list-group-item">Comunidad amigable y apoyo mutuo.</li>
                 </ul>
             </div>
-            <div class="col-5 d-flex align-items-center">
-                <img class="img-fluid"src="https://www.hussle.com/blog/wp-content/uploads/2020/12/Gym-structure-1080x675.png"> 
+            <div class="col-5 d-none d-md-flex align-items-center">
+                <img class="img-fluid rounded" th:src="@{/img/index.jpg}"> 
             </div>
         </div>
     </section>
     
     <section id="precios" class="container-fluid py-4 bg-body-secondary">
         <div class="row"> 
-            <div class="col-5 d-flex align-items-center">
-                <img src="https://www.hussle.com/blog/wp-content/uploads/2020/12/Gym-structure-1080x675.png" class="img-fluid" >
+            <div class="col-5 d-none d-md-flex align-items-center">
+                <img th:src="@{/img/index.png}" class="img-fluid rounded" >
             </div>
-            <div class="col-7 d-flex flex-column justify-content-center">
+            <div class="offset-sm-1 offset-md-0 col-sm-10 col-md-7 d-flex flex-column justify-content-center">
                 <h2 class="text-center">Nuestros Precios</h2>
             
                 <ul class="list-group text-center">

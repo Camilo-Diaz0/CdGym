@@ -24,10 +24,11 @@ public class WebSecurity {
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                .requestMatchers(mvc.pattern("/img/**")).permitAll()
                 .requestMatchers(mvc.pattern("/"),mvc.pattern(""), mvc.pattern("/index")).permitAll()
                 .requestMatchers(mvc.pattern("/login"),mvc.pattern("registro"), 
                     mvc.pattern("/empleado/instructores"), mvc.pattern("/validarRegistro"), 
-                    mvc.pattern("/clientes")).permitAll()
+                    mvc.pattern("/clientes"),mvc.pattern("/actividades")).permitAll()
                 .requestMatchers(mvc.pattern("/empleado/listar"), mvc.pattern("/empleado/informacion/**"))
                     .hasAnyRole("USER")
                 .requestMatchers(mvc.pattern("/empleado/registrarMensualidad/**"),

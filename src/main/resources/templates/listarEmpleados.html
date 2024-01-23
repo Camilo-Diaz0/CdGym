@@ -5,7 +5,7 @@
 
 <body class="bg-body-secondary">
     <div th:replace="~{componentes/menu :: menu}"></div>
-    <div class="container-fluid mt-5 vh-100">
+    <div class="container-fluid mt-5">
         <div class="text-center">
             <h2 class="pt-3" th:text="${titulo}"></h2>
             <p>Aca podra consultar la informacion de las personas que forman parte del equipo de cd Gym</p>
@@ -15,47 +15,52 @@
                 <h4>Listado</h4>
             </div>
             <div class="card-body">
+                <div class="table-responsive mb-3">
+                    <table class="table table-striped text-center">
+                        <caption>Datos del Empleado</caption>
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cargo</th>
+                                <th sec:authorize="hasRole('ROLE_GESTOR')">Mas Informacion</th>
+                                <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar Empleado</th>
 
-                <table class="table table-striped text-center">
-                    <caption>Datos del Empleado</caption>
-                    <thead class="table-primary">
-                        <tr>
-                            <th>Documento</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Cargo</th>
-                            <th sec:authorize="hasRole('ROLE_GESTOR')">Mas Informacion</th>
-                            <th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar Empleado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="empleado : ${empleados}">
+                                <th th:text="${empleado.documento}"></th>
+                                <th th:text="${empleado.nombre}"></th>
+                                <th th:text="${empleado.apellido}"></th>
+                                <th th:text="${empleado.cargo}"></th>
+                                <th sec:authorize="hasRole('ROLE_GESTOR')"><a
+                                        th:href="@{/empleado/informacion/{id}(id=${empleado.id})}"
+                                        class="link-offset-1">Ver mas...</a>
+                                </th>
+                                <th sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <div class="btn-group dropend" th:if="${empleado.cargo} != 'Administrador'">
+                                        <a class="link-danger link-offset-1 dropdown-toggle" href="#dropdown"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Eliminar
+                                        </a>
+                                        <ul class="dropdown-menu" id="dropdown">
+                                            <div class="form-control text-center p-3">
+                                                <p>¿Estás seguro de que deseas eliminar este usuario? </p>
+                                                <a th:href="@{/empleado/eliminar/{id}(id=${empleado.id})}"
+                                                    class="btn btn-danger">Eliminar</a>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <a href="" class="link-danger link-offset-1 link-opacity-50 pe-none"
+                                        th:if="${empleado.cargo} == 'Administrador'">Eliminar</a>
+                                </th>
+                            </tr>
+                        </tbody>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="empleado : ${empleados}">
-                            <th th:text="${empleado.documento}"></th>
-                            <th th:text="${empleado.nombre}"></th>
-                            <th th:text="${empleado.apellido}"></th>
-                            <th th:text="${empleado.cargo}"></th>
-                            <th sec:authorize="hasRole('ROLE_GESTOR')"><a th:href="@{/empleado/informacion/{id}(id=${empleado.id})}" class="link-offset-1">Ver mas...</a>
-                            </th>
-                            <th sec:authorize="hasRole('ROLE_ADMIN')">
-                                <div class="btn-group dropend" th:if="${empleado.cargo} != 'Administrador'">
-                                    <a  class="link-danger link-offset-1 dropdown-toggle" href="#dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                      Eliminar
-                                    </a>
-                                    <ul class="dropdown-menu" id="dropdown">
-                                        <div class="form-control text-center p-3">
-                                            <p>¿Estás seguro de que deseas eliminar este usuario? </p>
-                                            <a th:href="@{/empleado/eliminar/{id}(id=${empleado.id})}"  class="btn btn-danger">Eliminar</a>
-                                        </div>
-                                    </ul>
-                                  </div>
-                                <a href="" class="link-danger link-offset-1 link-opacity-50 pe-none"
-                                    th:if="${empleado.cargo} == 'Administrador'">Eliminar</a>
-                            </th>
-                        </tr>
-                    </tbody>
-
-                </table>
+                    </table>
+                </div>
                 <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" th:href="@{/}">
                     Volver al inicio
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

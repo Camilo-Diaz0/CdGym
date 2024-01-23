@@ -5,9 +5,9 @@
 
 <body class="bg-body-secondary">
 	<div th:replace="~{componentes/menu :: menu}"></div>
-	<div class="container-fluid vh-100">
+	<div class="container-fluid">
 		<form th:if="${usuario} != null" th:action="@{/login}" th:object="${usuario}" method="post" 
-			class="col-md-6 offset-md-3 bg-body-tertiary px-4 my-5 h-50 d-flex flex-column 
+			class="col-md-6 offset-md-3 bg-body-tertiary p-4 my-5 h-50 d-flex flex-column 
 			justify-content-center gap-3 border border-info rounded">
 			<h3 class="text-center " th:text="${titulo}"></h3>
 			<div class="mb-3">

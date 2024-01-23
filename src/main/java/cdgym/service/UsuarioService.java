@@ -50,4 +50,9 @@ public class UsuarioService {
         if(usuario != null) return true;
         return false;
     }
+    public boolean oldPassCorrecta(String username, String password){
+        Usuario usuario = getUsuario(username);
+        if(usuario != null) return passwordEncoder.matches(password, usuario.getPassword());
+        return false;
+    }   
 }

@@ -2,6 +2,7 @@ package cdgym.controllers;
 
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,12 @@ public class IndexController {
     public String index(Model model) {
         model.addAttribute("titulo", "CD GYM");
         return "index";
+    }
+
+    @GetMapping("/actividades")
+    public String actividades(Model model){
+        model.addAttribute("titulo", "Actividades adicionales");
+        return "actividadesDestacadas";
     }
 
     @GetMapping("/login")
@@ -90,6 +97,33 @@ public class IndexController {
         usuario.setRole(role);
         usuarioService.save(usuario);
         flash.addFlashAttribute("success", "Usuario registrado exitosamente");
+        return "redirect:/";
+    }
+
+    @GetMapping("/cambiarContraseña")
+    public String cambiarContraseña(Authentication authentication, Model model){
+        model.addAttribute("titulo", "Bienvenido " + authentication.getName());
+        Usuario user =new Usuario();
+        user.setUsername(authentication.getName());
+        model.addAttribute("usuario", user);
+        return "cambiarContraseña";
+    }
+
+    @PostMapping("/cambiarContraseña")
+    public String guardarContraseña(@Valid Usuario usuario, BindingResult result, 
+        @RequestParam String oldPassword, Model model, RedirectAttributes flash){
+        boolean oldPassCorrecta = usuarioService.oldPassCorrecta(usuario.getUsername(), oldPassword);
+        if (result.hasErrors() || !(oldPassCorrecta)) {
+            if(!oldPassCorrecta){
+                model.addAttribute("error", "Contrasela anterior incorrecta");
+            }
+            model.addAttribute("titulo", "Bienvenido " + usuario.getUsername());
+            return "cambiarContraseña";
+        }
+        Usuario user = usuarioService.getUsuario(usuario.getUsername());
+        user.setPassword(usuario.getPassword());
+        usuarioService.save(user);
+        flash.addFlashAttribute("success", "Contraseña cambiada correctamente");
         return "redirect:/";
     }
 

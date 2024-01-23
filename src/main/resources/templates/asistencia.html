@@ -6,7 +6,7 @@
 <body class="bg-body-secondary bg-gradient">
     <div th:replace="~{componentes/menu :: menu}"></div>
     
-    <div class="container-fluid vh-100">
+    <div class="container-fluid">
 
         <form th:action="@{/empleado/asistencia}" th:object="${asistencia}" method="post"
             class="col-md-6 offset-md-3 bg-body-tertiary p-4 my-5 min-h-50 d-flex flex-column justify-content-center gap-3 border rounded">

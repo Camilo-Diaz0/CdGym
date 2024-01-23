@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{componentes/menu :: header}"></head>
+
+<body class="bg-body-secondary">
+    <div th:replace="~{componentes/menu :: menu}"></div>
+    <div class="container-fluid">
+        <form th:action="@{/cambiarContraseña}" th:object="${usuario}" method="post" class="col-md-6 
+            offset-md-3 bg-body-tertiary p-4 my-5  d-flex flex-column justify-content-center gap-3 border 
+            border-info rounded">
+            <div class="text-center">
+                <h3 th:text="${titulo}">perro hpta</h3>
+                <p>Aca puedes cambiar la contraseña</p>
+            </div>
+            
+            <div class="mb-3">
+                <label for="old-password" class="form-label">Contraseña anterior:</label>
+                <input type="password" class="form-control" id="old-password" name="oldPassword" required>
+
+            </div>
+            <div class="mb-3">
+                <label for="new-password" class="form-label">Nueva contraseña:</label>
+                <input type="text" th:field="*{username}" hidden>
+                <input type="password" class="form-control" id="new-password" th:field="*{password}" 
+                    th:errorclass="border-danger" required>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-form text-danger"></div>
+            </div>
+            <button class="form-control btn btn-primary">Enviar</button>
+        </form>
+    </div>
+    <footer th:replace="~{componentes/menu :: footer}"></footer>
+</body>
+
+</html>
